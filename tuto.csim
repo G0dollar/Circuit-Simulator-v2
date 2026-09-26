@@ -1,0 +1,31 @@
+{
+  "version": 1,
+  "gridWidth": 50,
+  "gridHeight": 50,
+  "components": [
+    { "type": "Wire", "col": 17, "row": 13, "direction": "SOUTH", "wireType": "CORNER" },
+    { "type": "Wire", "col": 18, "row": 13, "direction": "NORTH", "wireType": "STRAIGHT" },
+    { "type": "Wire", "col": 19, "row": 13, "direction": "NORTH", "wireType": "STRAIGHT" },
+    { "type": "Wire", "col": 20, "row": 13, "direction": "NORTH", "wireType": "STRAIGHT" },
+    { "type": "Bulb", "col": 21, "row": 13, "direction": "NORTH", "resistance": 10.0 },
+    { "type": "Wire", "col": 22, "row": 13, "direction": "NORTH", "wireType": "STRAIGHT" },
+    { "type": "Wire", "col": 23, "row": 13, "direction": "NORTH", "wireType": "STRAIGHT" },
+    { "type": "Wire", "col": 24, "row": 13, "direction": "WEST", "wireType": "CORNER" },
+    { "type": "Wire", "col": 17, "row": 14, "direction": "EAST", "wireType": "STRAIGHT" },
+    { "type": "Wire", "col": 24, "row": 14, "direction": "EAST", "wireType": "STRAIGHT" },
+    { "type": "Resistor", "col": 17, "row": 15, "direction": "EAST", "resistance": 100.0 },
+    { "type": "Wire", "col": 24, "row": 15, "direction": "EAST", "wireType": "STRAIGHT" },
+    { "type": "Wire", "col": 17, "row": 16, "direction": "EAST", "wireType": "STRAIGHT" },
+    { "type": "Wire", "col": 24, "row": 16, "direction": "EAST", "wireType": "STRAIGHT" },
+    { "type": "Wire", "col": 17, "row": 17, "direction": "EAST", "wireType": "STRAIGHT" },
+    { "type": "Wire", "col": 24, "row": 17, "direction": "EAST", "wireType": "STRAIGHT" },
+    { "type": "Wire", "col": 17, "row": 18, "direction": "EAST", "wireType": "CORNER" },
+    { "type": "Wire", "col": 18, "row": 18, "direction": "NORTH", "wireType": "STRAIGHT" },
+    { "type": "Wire", "col": 19, "row": 18, "direction": "NORTH", "wireType": "STRAIGHT" },
+    { "type": "Battery", "col": 20, "row": 18, "direction": "NORTH", "voltage": 9.0, "internalResistance": 0.0 },
+    { "type": "Wire", "col": 21, "row": 18, "direction": "NORTH", "wireType": "STRAIGHT" },
+    { "type": "Wire", "col": 22, "row": 18, "direction": "NORTH", "wireType": "STRAIGHT" },
+    { "type": "Wire", "col": 23, "row": 18, "direction": "NORTH", "wireType": "STRAIGHT" },
+    { "type": "Wire", "col": 24, "row": 18, "direction": "NORTH", "wireType": "CORNER" }
+  ]
+}

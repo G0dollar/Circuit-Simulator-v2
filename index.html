@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Download and run the Interactive 2D Electricity Circuit Simulator.">
+    <title>Electricity Circuit Simulator</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Roboto+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #0b0b0f;
+            --card-bg: #14141e;
+            --accent-green: #50c878;
+            --accent-glow: rgba(80, 200, 120, 0.4);
+            --accent-orange: #ffbe3c;
+            --accent-orange-glow: rgba(255, 190, 60, 0.3);
+            --text-main: #f0f0f5;
+            --text-sub: #9a9ab0;
+            --border-color: #262635;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.6;
+            overflow-x: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        /* Ambient background glow */
+        .ambient-glow {
+            position: absolute;
+            top: -200px;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(80, 200, 120, 0.15) 0%, rgba(11, 11, 15, 0) 70%);
+            z-index: -1;
+            filter: blur(80px);
+        }
+
+        .container {
+            max-width: 900px;
+            width: 100%;
+            padding: 40px 20px;
+            z-index: 1;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 60px;
+            margin-top: 40px;
+        }
+
+        header h1 {
+            font-size: 3rem;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            background: linear-gradient(135deg, #ffffff 0%, var(--accent-green) 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 12px;
+        }
+
+        header p {
+            font-size: 1.25rem;
+            color: var(--text-sub);
+            max-width: 600px;
+            margin: 0 auto;
+            font-weight: 300;
+        }
+
+        /* Main CTA Section */
+        .cta-card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            padding: 40px;
+            text-align: center;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+            margin-bottom: 50px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--accent-green), var(--accent-orange));
+        }
+
+        .cta-card h2 {
+            font-size: 1.8rem;
+            font-weight: 600;
+            margin-bottom: 16px;
+        }
+
+        .download-btn {
+            display: inline-flex;
+            align-items: center;
+            background-color: var(--accent-green);
+            color: #0b0b0f;
+            text-decoration: none;
+            padding: 16px 36px;
+            font-size: 1.15rem;
+            font-weight: 600;
+            border-radius: 30px;
+            box-shadow: 0 8px 24px var(--accent-glow);
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            margin: 20px 0;
+            border: 2px solid transparent;
+        }
+
+        .download-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 30px rgba(80, 200, 120, 0.6);
+            background-color: #5fe08d;
+        }
+
+        .download-btn:active {
+            transform: translateY(0);
+        }
+
+        .download-info {
+            font-size: 0.9rem;
+            color: var(--text-sub);
+        }
+
+        .download-info a {
+            color: var(--accent-green);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .download-info a:hover {
+            text-decoration: underline;
+        }
+
+        /* Features Section */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 24px;
+            margin-bottom: 60px;
+        }
+
+        .feature-card {
+            background-color: #11111a;
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 28px;
+            transition: border-color 0.3s ease;
+        }
+
+        .feature-card:hover {
+            border-color: #3b3b4f;
+        }
+
+        .feature-card h3 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: var(--text-main);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .feature-card p {
+            color: var(--text-sub);
+            font-size: 0.95rem;
+            font-weight: 300;
+        }
+
+        /* Controls Section */
+        .controls-section {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            padding: 36px;
+            margin-bottom: 50px;
+        }
+
+        .controls-section h2 {
+            font-size: 1.5rem;
+            margin-bottom: 24px;
+            font-weight: 600;
+            border-left: 4px solid var(--accent-green);
+            padding-left: 12px;
+        }
+
+        .control-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .control-table th, .control-table td {
+            padding: 12px 16px;
+            text-align: left;
+            border-bottom: 1px solid #1f1f2e;
+        }
+
+        .control-table th {
+            color: var(--text-sub);
+            font-weight: 600;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .control-table td {
+            font-size: 0.95rem;
+        }
+
+        .key-badge {
+            font-family: 'Roboto Mono', monospace;
+            background-color: #242435;
+            color: var(--text-main);
+            padding: 2px 8px;
+            border-radius: 4px;
+            border: 1px solid #36364f;
+            font-size: 0.85rem;
+            font-weight: bold;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding-top: 40px;
+            border-top: 1px solid var(--border-color);
+            color: var(--text-sub);
+            font-size: 0.85rem;
+            width: 100%;
+            margin-top: auto;
+        }
+
+        footer a {
+            color: var(--accent-green);
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 600px) {
+            header h1 {
+                font-size: 2.25rem;
+            }
+            .cta-card {
+                padding: 24px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="ambient-glow"></div>
+    
+    <div class="container">
+        <header>
+            <h1>Electricity Circuit Simulator</h1>
+            <p>A real-time grid-based electrical simulator with nodal analysis, visual measurement tools, and smooth interactive controls.</p>
+        </header>
+
+        <section class="cta-card">
+            <h2>Run the Desktop Application</h2>
+            <p style="color: var(--text-sub); font-weight: 300; margin-bottom: 15px;">
+                Download the compiled executable JAR file and run it directly on Windows, macOS, or Linux.
+            </p>
+            
+            <!-- Download Button linking to the GitHub releases download -->
+            <a href="https://github.com/g0dollar/electricity-circuit-simulator/releases/download/v1.0.0/CircuitSimulator.jar" class="download-btn">
+                Download CircuitSimulator.jar
+            </a>
+
+            <div class="download-info">
+                <p>Requires <a href="https://www.oracle.com/java/technologies/downloads/" target="_blank">Java JDK (17+)</a> installed on your system.</p>
+                <p style="margin-top: 10px; font-size: 0.8rem;">
+                    Having trouble? View instructions on the <a href="https://github.com/g0dollar/electricity-circuit-simulator" target="_blank">GitHub Repository</a>.
+                </p>
+            </div>
+        </section>
+
+        <section class="features-grid">
+            <div class="feature-card">
+                <h3>⚡ Nodal Solver</h3>
+                <p>Calculates currents, voltages, and voltage drops using Modified Nodal Analysis (MNA) and Gaussian elimination.</p>
+            </div>
+            <div class="feature-card">
+                <h3>🔄 Auto-Routing</h3>
+                <p>Wires automatically detect neighbors and snap into place, adapting straight, corner, T-junction, and cross alignments.</p>
+            </div>
+            <div class="feature-card">
+                <h3>⏮️ Undo / Redo</h3>
+                <p>Fully tracked actions via the Command Pattern history stack. Revert or reapply actions using Ctrl+Z and Ctrl+Y.</p>
+            </div>
+            <div class="feature-card">
+                <h3>🔍 Pan & Zoom</h3>
+                <p>Navigate a massive 50x50 layout using keyboard scrolling (Arrow/WASD) and scaling (+/- keys).</p>
+            </div>
+        </section>
+
+        <section class="controls-section">
+            <h2>Keyboard and Mouse Controls</h2>
+            <table class="control-table">
+                <thead>
+                    <tr>
+                        <th>Action</th>
+                        <th>Control</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Place Component</strong></td>
+                        <td><span class="key-badge">Left-Click</span></td>
+                        <td>Places the selected component tool onto the grid.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Rotate Component</strong></td>
+                        <td><span class="key-badge">Right-Click</span> or <span class="key-badge">R</span></td>
+                        <td>Rotates hovered component CW.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Delete Component</strong></td>
+                        <td><span class="key-badge">Delete</span> or <span class="key-badge">Backspace</span></td>
+                        <td>Erases the hovered component on the grid.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Toggle Switch / Cycle</strong></td>
+                        <td><span class="key-badge">C</span></td>
+                        <td>Toggles Switch ON/OFF or cycles wire shapes manually.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Change Values</strong></td>
+                        <td><span class="key-badge">Double-Click</span></td>
+                        <td>Opens parameter dialogue (voltage, resistance).</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Undo / Redo</strong></td>
+                        <td><span class="key-badge">Ctrl + Z</span> / <span class="key-badge">Ctrl + Y</span></td>
+                        <td>Reverts or reapplies the previous edit command.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Canvas Pan</strong></td>
+                        <td><span class="key-badge">Arrow Keys</span> / <span class="key-badge">WASD</span></td>
+                        <td>Scrolls viewport across the 50x50 grid.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Canvas Zoom</strong></td>
+                        <td><span class="key-badge">+</span> / <span class="key-badge">-</span></td>
+                        <td>Zoom in and out centering on the cursor.</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <footer>
+            <p>Created by <a href="https://github.com/g0dollar" target="_blank">g0dollar</a>. Licensed under the MIT License.</p>
+        </footer>
+    </div>
+</body>
+</html>
