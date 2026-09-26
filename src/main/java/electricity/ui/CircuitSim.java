@@ -11,6 +11,9 @@ import javax.swing.border.TitledBorder;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 public class CircuitSim extends JFrame {
+    private static final int SIDEBAR_WIDTH = 218;
+    private static final int SIDEBAR_HORIZONTAL_PADDING = 16;
+    private static final int SIDEBAR_SEPARATOR_WIDTH = 1;
     private static final Color BG_APP = Color.decode("#101820");
     private static final Color SURFACE = Color.decode("#172029");
     private static final Color FIELD = Color.decode("#0D1217");
@@ -32,7 +35,7 @@ public class CircuitSim extends JFrame {
     public CircuitSim() {
         super("Circuit Simulator");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setResizable(true);
+        setResizable(false);
 
         // Create canvas
         canvasPanel = new CanvasPanel();
@@ -56,8 +59,7 @@ public class CircuitSim extends JFrame {
         add(toolbar,     BorderLayout.WEST);
 
         pack();
-        setMinimumSize(new Dimension(900, 600));
-        setLocationRelativeTo(null);
+        setExtendedState(JFrame.MAXIMIZED_BOTH);
         setVisible(true);
 
         // Simulation loop
@@ -245,26 +247,30 @@ public class CircuitSim extends JFrame {
 
     private JPanel createToolbar() {
         JPanel panel = new JPanel();
-        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+        panel.setLayout(new BorderLayout(0, 8));
         panel.setBackground(SURFACE);
         panel.setBorder(BorderFactory.createCompoundBorder(
             BorderFactory.createMatteBorder(0, 0, 0, 1, BORDER),
             BorderFactory.createEmptyBorder(10, 8, 10, 8)));
-        panel.setPreferredSize(new Dimension(218, 0));
+        panel.setPreferredSize(new Dimension(SIDEBAR_WIDTH, 0));
+
+        JPanel header = new JPanel();
+        header.setLayout(new BoxLayout(header, BoxLayout.Y_AXIS));
+        header.setOpaque(false);
 
         JLabel paletteTitle = new JLabel("COMPONENT PALETTE");
         paletteTitle.setAlignmentX(java.awt.Component.LEFT_ALIGNMENT);
         paletteTitle.setForeground(CYAN);
         paletteTitle.setFont(new Font("Dialog", Font.BOLD, 11));
-        panel.add(paletteTitle);
-        panel.add(Box.createVerticalStrut(8));
+        header.add(paletteTitle);
+        header.add(Box.createVerticalStrut(8));
 
         JLabel actionsTitle = new JLabel("ACTIONS");
         actionsTitle.setAlignmentX(java.awt.Component.LEFT_ALIGNMENT);
         actionsTitle.setForeground(MUTED);
         actionsTitle.setFont(new Font("Dialog", Font.BOLD, 10));
-        panel.add(actionsTitle);
-        panel.add(Box.createVerticalStrut(4));
+        header.add(actionsTitle);
+        header.add(Box.createVerticalStrut(4));
 
         JPanel actions = new JPanel(new GridLayout(0, 2, 4, 4));
         actions.setOpaque(false);
@@ -286,15 +292,17 @@ public class CircuitSim extends JFrame {
             graphDialog.setVisible(!graphDialog.isVisible());
             graphDialog.toFront();
         }));
-        panel.add(actions);
-        panel.add(Box.createVerticalStrut(10));
+        header.add(actions);
+        header.add(Box.createVerticalStrut(10));
 
         JLabel toolsTitle = new JLabel("PLACE COMPONENT");
         toolsTitle.setAlignmentX(java.awt.Component.LEFT_ALIGNMENT);
         toolsTitle.setForeground(MUTED);
         toolsTitle.setFont(new Font("Dialog", Font.BOLD, 10));
-        panel.add(toolsTitle);
-        panel.add(Box.createVerticalStrut(4));
+        header.add(toolsTitle);
+        header.add(Box.createVerticalStrut(4));
+
+        panel.add(header, BorderLayout.NORTH);
 
         JPanel tools = new JPanel();
         tools.setLayout(new BoxLayout(tools, BoxLayout.Y_AXIS));
@@ -325,8 +333,13 @@ public class CircuitSim extends JFrame {
                 {"Text Label", "T", CanvasPanel.Tool.TEXT_LABEL},
                 {"Eraser", "Del", CanvasPanel.Tool.ERASER}
         });
-        panel.add(tools);
-        panel.add(Box.createVerticalGlue());
+        JScrollPane toolsScroll = new JScrollPane(tools,
+            JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
+            JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        toolsScroll.setBorder(null);
+        toolsScroll.getViewport().setBackground(SURFACE);
+        toolsScroll.setBackground(SURFACE);
+        panel.add(toolsScroll, BorderLayout.CENTER);
         return panel;
     }
 
@@ -337,8 +350,7 @@ public class CircuitSim extends JFrame {
                 BorderFactory.createLineBorder(BORDER), title,
                 TitledBorder.LEFT, TitledBorder.TOP,
                 new Font("Dialog", Font.BOLD, 10), MUTED));
-            groupPanel.setAlignmentX(java.awt.Component.LEFT_ALIGNMENT);
-            groupPanel.setMaximumSize(new Dimension(Integer.MAX_VALUE, 92));
+        groupPanel.setAlignmentX(java.awt.Component.LEFT_ALIGNMENT);
 
         for (int i = 0; i < tools.length; i++) {
             String label = (String) tools[i][0];
@@ -349,7 +361,37 @@ public class CircuitSim extends JFrame {
             group.add(button);
             groupPanel.add(button);
         }
+        setGroupHeightFromContent(groupPanel);
         parent.add(groupPanel);
+    }
+
+    private void setGroupHeightFromContent(JPanel groupPanel) {
+        int availableWidth = SIDEBAR_WIDTH - SIDEBAR_HORIZONTAL_PADDING - SIDEBAR_SEPARATOR_WIDTH
+                - groupPanel.getInsets().left - groupPanel.getInsets().right;
+        int horizontalGap = 3;
+        int verticalGap = 0;
+        int rowWidth = 0;
+        int rows = 1;
+        int buttonHeight = 0;
+
+        for (java.awt.Component child : groupPanel.getComponents()) {
+            Dimension preferred = child.getPreferredSize();
+            buttonHeight = Math.max(buttonHeight, preferred.height);
+            if (rowWidth > 0 && rowWidth + horizontalGap + preferred.width > availableWidth) {
+                rows++;
+                rowWidth = preferred.width;
+            } else {
+                if (rowWidth > 0) rowWidth += horizontalGap;
+                rowWidth += preferred.width;
+            }
+        }
+
+        Insets insets = groupPanel.getInsets();
+        int height = insets.top + insets.bottom + rows * buttonHeight + (rows - 1) * verticalGap;
+        Dimension preferred = new Dimension(availableWidth + insets.left + insets.right, height);
+        groupPanel.setPreferredSize(preferred);
+        groupPanel.setMinimumSize(preferred);
+        groupPanel.setMaximumSize(new Dimension(Integer.MAX_VALUE, height));
     }
 
     private JToggleButton createToolButton(String label, String shortcut, CanvasPanel.Tool tool) {
