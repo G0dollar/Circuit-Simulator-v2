@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Download and run the Interactive 2D Electricity Circuit Simulator.">
-    <title>Electricity Circuit Simulator</title>
+    <title>Electricity Circuit Simulator — Landing Page (Copy)</title>
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -17,6 +17,8 @@
             --accent-glow: rgba(80, 200, 120, 0.4);
             --accent-orange: #ffbe3c;
             --accent-orange-glow: rgba(255, 190, 60, 0.3);
+            --accent-cyan: #35c6d8;
+            --accent-coral: #e86a5b;
             --text-main: #f0f0f5;
             --text-sub: #9a9ab0;
             --border-color: #262635;
@@ -153,6 +155,15 @@
             text-decoration: underline;
         }
 
+        /* Section headings (shared) */
+        .section-heading {
+            font-size: 1.5rem;
+            margin-bottom: 24px;
+            font-weight: 600;
+            border-left: 4px solid var(--accent-green);
+            padding-left: 12px;
+        }
+
         /* Features Section */
         .features-grid {
             display: grid;
@@ -189,6 +200,27 @@
             font-weight: 300;
         }
 
+        /* Components Section */
+        .components-section {
+            margin-bottom: 60px;
+        }
+
+        .component-pills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .component-pill {
+            background-color: #11111a;
+            border: 1px solid var(--border-color);
+            border-radius: 30px;
+            padding: 8px 18px;
+            font-size: 0.9rem;
+            color: var(--text-main);
+            font-weight: 400;
+        }
+
         /* Controls Section */
         .controls-section {
             background-color: var(--card-bg);
@@ -196,14 +228,6 @@
             border-radius: 20px;
             padding: 36px;
             margin-bottom: 50px;
-        }
-
-        .controls-section h2 {
-            font-size: 1.5rem;
-            margin-bottom: 24px;
-            font-weight: 600;
-            border-left: 4px solid var(--accent-green);
-            padding-left: 12px;
         }
 
         .control-table {
@@ -229,6 +253,10 @@
             font-size: 0.95rem;
         }
 
+        .control-table tbody tr:last-child td {
+            border-bottom: none;
+        }
+
         .key-badge {
             font-family: 'Roboto Mono', monospace;
             background-color: #242435;
@@ -238,6 +266,7 @@
             border: 1px solid #36364f;
             font-size: 0.85rem;
             font-weight: bold;
+            white-space: nowrap;
         }
 
         /* Footer */
@@ -276,24 +305,23 @@
     <div class="container">
         <header>
             <h1>Electricity Circuit Simulator</h1>
-            <p>A real-time grid-based electrical simulator with nodal analysis, visual measurement tools, and smooth interactive controls.</p>
+            <p>A real-time grid-based electrical simulator with nodal analysis, transient and AC behavior, live measurement and graphing tools, and a custom-built interface.</p>
         </header>
 
         <section class="cta-card">
             <h2>Run the Desktop Application</h2>
             <p style="color: var(--text-sub); font-weight: 300; margin-bottom: 15px;">
-                Download the compiled executable JAR file and run it directly on Windows, macOS, or Linux.
+                Download the Windows app bundle. It includes its own Java runtime.
             </p>
             
-            <!-- Download Button linking to the GitHub releases download -->
-            <a href="https://github.com/g0dollar/electricity-circuit-simulator/releases/download/v1.0.0/CircuitSimulator.jar" class="download-btn">
-                Download CircuitSimulator.jar
+            <a href="dist/ElectricitySimulator-Windows-x64.zip" class="download-btn" download>
+                Download for Windows (64-bit)
             </a>
 
             <div class="download-info">
-                <p>Requires <a href="https://www.oracle.com/java/technologies/downloads/" target="_blank">Java JDK (17+)</a> installed on your system.</p>
+                <p>Extract the ZIP, then open <strong>ElectricitySimulator.exe</strong>. No separate Java installation is required.</p>
                 <p style="margin-top: 10px; font-size: 0.8rem;">
-                    Having trouble? View instructions on the <a href="https://github.com/g0dollar/electricity-circuit-simulator" target="_blank">GitHub Repository</a>.
+                    Windows x64 app bundle · ZIP download · Includes the application and runtime.
                 </p>
             </div>
         </section>
@@ -301,24 +329,64 @@
         <section class="features-grid">
             <div class="feature-card">
                 <h3>⚡ Nodal Solver</h3>
-                <p>Calculates currents, voltages, and voltage drops using Modified Nodal Analysis (MNA) and Gaussian elimination.</p>
+                <p>Calculates currents, voltages, and voltage drops using Modified Nodal Analysis (MNA) and Gaussian elimination, across multiple independent circuits on the same grid.</p>
+            </div>
+            <div class="feature-card">
+                <h3>🌀 Transient &amp; AC Behavior</h3>
+                <p>Capacitors and inductors charge and discharge over time, diodes and LEDs converge to the correct bias state, and AC motors generate a live time-varying sine voltage.</p>
+            </div>
+            <div class="feature-card">
+                <h3>🛡️ Solver Diagnostics</h3>
+                <p>Floating or singular nodes are automatically detected and flagged with a visible warning, instead of silently reporting a misleading zero.</p>
             </div>
             <div class="feature-card">
                 <h3>🔄 Auto-Routing</h3>
-                <p>Wires automatically detect neighbors and snap into place, adapting straight, corner, T-junction, and cross alignments.</p>
+                <p>Wires automatically detect neighbors and snap into place, adapting straight, corner, T-junction, and cross alignments, with a live current heat-map tint.</p>
+            </div>
+            <div class="feature-card">
+                <h3>📈 Graphing &amp; Oscilloscope</h3>
+                <p>Plot any component's live voltage or current on a rolling graph, or open a multi-channel oscilloscope to monitor several sources at once.</p>
+            </div>
+            <div class="feature-card">
+                <h3>💾 Save &amp; Load Circuits</h3>
+                <p>Save a full circuit layout — components, values, orientation, and wiring — to a file, and reopen it later.</p>
             </div>
             <div class="feature-card">
                 <h3>⏮️ Undo / Redo</h3>
-                <p>Fully tracked actions via the Command Pattern history stack. Revert or reapply actions using Ctrl+Z and Ctrl+Y.</p>
+                <p>Fully tracked actions via a Command Pattern history stack. Revert or reapply edits using Ctrl+Z and Ctrl+Y.</p>
             </div>
             <div class="feature-card">
-                <h3>🔍 Pan & Zoom</h3>
-                <p>Navigate a massive 50x50 layout using keyboard scrolling (Arrow/WASD) and scaling (+/- keys).</p>
+                <h3>🔍 Pan &amp; Zoom</h3>
+                <p>Navigate a massive 50x50 layout using keyboard scrolling, middle-drag panning, and scroll-wheel or keyboard zoom.</p>
+            </div>
+            <div class="feature-card">
+                <h3>🎨 Custom Dark Interface</h3>
+                <p>A dedicated dark design system spans the canvas, property editor, sidebar, and graph/oscilloscope panels — not the default Swing look.</p>
+            </div>
+        </section>
+
+        <section class="components-section">
+            <h2 class="section-heading">Components</h2>
+            <div class="component-pills">
+                <span class="component-pill">Battery</span>
+                <span class="component-pill">Resistor</span>
+                <span class="component-pill">Bulb</span>
+                <span class="component-pill">Switch</span>
+                <span class="component-pill">Fuse</span>
+                <span class="component-pill">Capacitor</span>
+                <span class="component-pill">Inductor</span>
+                <span class="component-pill">Diode</span>
+                <span class="component-pill">LED</span>
+                <span class="component-pill">AC Motor</span>
+                <span class="component-pill">Ammeter</span>
+                <span class="component-pill">Voltmeter</span>
+                <span class="component-pill">Wire</span>
+                <span class="component-pill">Text Label</span>
             </div>
         </section>
 
         <section class="controls-section">
-            <h2>Keyboard and Mouse Controls</h2>
+            <h2 class="section-heading">Keyboard and Mouse Controls</h2>
             <table class="control-table">
                 <thead>
                     <tr>
@@ -336,37 +404,57 @@
                     <tr>
                         <td><strong>Rotate Component</strong></td>
                         <td><span class="key-badge">Right-Click</span> or <span class="key-badge">R</span></td>
-                        <td>Rotates hovered component CW.</td>
+                        <td>Rotates the hovered component clockwise.</td>
                     </tr>
                     <tr>
                         <td><strong>Delete Component</strong></td>
-                        <td><span class="key-badge">Delete</span> or <span class="key-badge">Backspace</span></td>
+                        <td><span class="key-badge">Delete</span> / <span class="key-badge">Backspace</span></td>
                         <td>Erases the hovered component on the grid.</td>
                     </tr>
                     <tr>
-                        <td><strong>Toggle Switch / Cycle</strong></td>
+                        <td><strong>Toggle Switch / Cycle Wire</strong></td>
                         <td><span class="key-badge">C</span></td>
-                        <td>Toggles Switch ON/OFF or cycles wire shapes manually.</td>
+                        <td>Toggles a Switch ON/OFF or cycles a wire's geometry.</td>
                     </tr>
                     <tr>
-                        <td><strong>Change Values</strong></td>
+                        <td><strong>Configure Parameters</strong></td>
                         <td><span class="key-badge">Double-Click</span></td>
-                        <td>Opens parameter dialogue (voltage, resistance).</td>
+                        <td>Opens the property editor, showing a live readout alongside editable values.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Open Graph</strong></td>
+                        <td><span class="key-badge">Alt+Click</span> or <span class="key-badge">G</span></td>
+                        <td>Opens a real-time voltage/current graph for the hovered component.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Toggle Oscilloscope</strong></td>
+                        <td><span class="key-badge">Ctrl+Shift+O</span></td>
+                        <td>Opens the multi-channel oscilloscope.</td>
                     </tr>
                     <tr>
                         <td><strong>Undo / Redo</strong></td>
-                        <td><span class="key-badge">Ctrl + Z</span> / <span class="key-badge">Ctrl + Y</span></td>
-                        <td>Reverts or reapplies the previous edit command.</td>
+                        <td><span class="key-badge">Ctrl+Z</span> / <span class="key-badge">Ctrl+Y</span></td>
+                        <td>Reverts or reapplies the previous edit.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>New / Open / Save / Save As</strong></td>
+                        <td><span class="key-badge">Ctrl+N</span> <span class="key-badge">Ctrl+O</span> <span class="key-badge">Ctrl+S</span> <span class="key-badge">Ctrl+Shift+S</span></td>
+                        <td>Manage circuit files.</td>
                     </tr>
                     <tr>
                         <td><strong>Canvas Pan</strong></td>
-                        <td><span class="key-badge">Arrow Keys</span> / <span class="key-badge">WASD</span></td>
-                        <td>Scrolls viewport across the 50x50 grid.</td>
+                        <td><span class="key-badge">Arrow Keys</span> / <span class="key-badge">WASD</span> / Middle-Drag</td>
+                        <td>Scrolls the viewport across the 50x50 grid.</td>
                     </tr>
                     <tr>
                         <td><strong>Canvas Zoom</strong></td>
-                        <td><span class="key-badge">+</span> / <span class="key-badge">-</span></td>
-                        <td>Zoom in and out centering on the cursor.</td>
+                        <td><span class="key-badge">Scroll</span> or <span class="key-badge">+</span> / <span class="key-badge">-</span></td>
+                        <td>Zooms in and out, centering on the cursor.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Reset View</strong></td>
+                        <td><span class="key-badge">Home</span></td>
+                        <td>Resets zoom and pan.</td>
                     </tr>
                 </tbody>
             </table>
