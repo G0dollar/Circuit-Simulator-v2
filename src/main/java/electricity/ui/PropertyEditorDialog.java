@@ -1,14 +1,46 @@
 package electricity.ui;
 
-import electricity.model.*;
-import electricity.model.Component;
-import javax.swing.*;
-import javax.swing.border.*;
-import java.awt.*;
-import java.awt.event.*;
-import java.util.*;
-import java.util.List;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.Font;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.Map;
 import java.util.function.Consumer;
+
+import javax.swing.BorderFactory;
+import javax.swing.Box;
+import javax.swing.BoxLayout;
+import javax.swing.JButton;
+import javax.swing.JCheckBox;
+import javax.swing.JComponent;
+import javax.swing.JDialog;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextField;
+import javax.swing.KeyStroke;
+import javax.swing.border.CompoundBorder;
+import javax.swing.border.MatteBorder;
+
+import electricity.model.ACMotor;
+import electricity.model.Battery;
+import electricity.model.Bulb;
+import electricity.model.Capacitor;
+import electricity.model.Component;
+import electricity.model.Fuse;
+import electricity.model.Inductor;
+import electricity.model.Resistor;
+import electricity.model.Switch;
+import electricity.model.TextLabel;
 
 /**
  * Dark-themed property editor dialog that replaces the plain JOptionPane prompts.

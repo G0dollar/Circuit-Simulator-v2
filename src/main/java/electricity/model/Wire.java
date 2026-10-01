@@ -1,10 +1,12 @@
 package electricity.model;
 
-import electricity.assets.SpriteLoader;
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.util.HashMap;
 import java.util.Map;
+
+import electricity.assets.SpriteLoader;
 
 public class Wire extends Component {
     public enum WireType {

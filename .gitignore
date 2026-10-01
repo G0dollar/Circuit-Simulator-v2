@@ -16,6 +16,7 @@
 *.nar
 *.ear
 *.zip
+!dist/ElectricitySimulator-Windows-x64.zip
 *.tar.gz
 *.rar
 

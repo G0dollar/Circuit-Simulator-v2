@@ -1,10 +1,19 @@
 package electricity.ui;
 
-import electricity.model.Component;
-import javax.swing.*;
-import java.awt.*;
-import java.awt.geom.*;
+import java.awt.BasicStroke;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.FontMetrics;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.RenderingHints;
+import java.awt.geom.GeneralPath;
 import java.util.Arrays;
+
+import javax.swing.JPanel;
+
+import electricity.model.Component;
 
 /**
  * Real-time line-graph panel that plots voltage AND current for a single

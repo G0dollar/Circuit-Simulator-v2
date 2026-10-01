@@ -1,16 +1,36 @@
 package electricity.ui;
 
-import electricity.command.EditCommand;
-import electricity.io.CircuitIO;
-import electricity.model.*;
-import electricity.model.Component;
-import electricity.solver.CircuitSolver;
-import electricity.solver.GridDimensions;
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Graphics;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Stack;
-import javax.swing.*;
+
+import javax.swing.BorderFactory;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
+
+import electricity.command.EditCommand;
+import electricity.model.ACMotor;
+import electricity.model.Ammeter;
+import electricity.model.Battery;
+import electricity.model.Bulb;
+import electricity.model.Capacitor;
+import electricity.model.Component;
+import electricity.model.Diode;
+import electricity.model.Direction;
+import electricity.model.Fuse;
+import electricity.model.Inductor;
+import electricity.model.LED;
+import electricity.model.Resistor;
+import electricity.model.Switch;
+import electricity.model.TextLabel;
+import electricity.model.Voltmeter;
+import electricity.model.Wire;
+import electricity.solver.CircuitSolver;
+import electricity.solver.GridDimensions;
 
 public class CanvasPanel extends JPanel {
     public enum Tool {

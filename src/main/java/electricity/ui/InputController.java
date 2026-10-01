@@ -1,14 +1,16 @@
 package electricity.ui;
 
-import electricity.model.Component;
-import electricity.solver.GridDimensions;
 import java.awt.Cursor;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseWheelEvent;
+
 import javax.swing.SwingUtilities;
+
+import electricity.model.Component;
+import electricity.solver.GridDimensions;
 
 public class InputController {
     private static final int TILE_SIZE = 64;

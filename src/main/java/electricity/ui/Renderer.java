@@ -1,8 +1,5 @@
 package electricity.ui;
 
-import electricity.model.*;
-import electricity.model.Component;
-import electricity.solver.GridDimensions;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Font;
@@ -11,6 +8,21 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.geom.AffineTransform;
+
+import electricity.model.ACMotor;
+import electricity.model.Ammeter;
+import electricity.model.Battery;
+import electricity.model.Bulb;
+import electricity.model.Capacitor;
+import electricity.model.Component;
+import electricity.model.Diode;
+import electricity.model.Fuse;
+import electricity.model.Inductor;
+import electricity.model.LED;
+import electricity.model.Resistor;
+import electricity.model.Voltmeter;
+import electricity.model.Wire;
+import electricity.solver.GridDimensions;
 
 public class Renderer {
     private static final int TILE_SIZE = 64;
